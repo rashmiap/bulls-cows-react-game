@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Rules from './Components/Rules';
+import Game from './Components/Game';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -16,6 +17,7 @@ class App extends Component {
       <AppWrapper>
         <h2>Bulls and Cows game</h2>
         <Rules />
+        <Game />
       </AppWrapper>
     );
   }
