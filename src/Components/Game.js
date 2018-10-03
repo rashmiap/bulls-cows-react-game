@@ -1,6 +1,36 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+const GameInput = styled.input`
+  text-align: center;
+  font-size: 3em;
+  box-sizing: border-box;
+  padding: 10px;
+  color: cadetblue;
+  font-family: inherit;
+  margin: 3% auto;
+  max-width: 80%;
+  border-radius: 20px;
+  border: none;
+  &:focus{
+    outline: none;
+  }
+`
+const GameAttempts = styled.div`
+  border-top: 1px dashed;
+  padding: 2%;
+  max-width: 50%;
+  margin: 0 auto;
+  background-color: rgba(0,0,0,0.5);
+  :first-of-type{
+    border-top: none;
+  }
+`
+const WonText = styled.h1`
+  background-color: rgba(0,0,0,0.5);
+  display: inline-block;
+  padding: 20px;
+`
 class Game extends Component {
   constructor(){
     super();
@@ -8,6 +38,7 @@ class Game extends Component {
       guessNumber : '0000',
       secretNumber : (Math.random()).toString().slice(2,6),
       attempts : [],
+      attemptCount : 0,
       gameWon : false,
     }
   }
@@ -20,7 +51,7 @@ class Game extends Component {
   }
   __checkAnswer = (event) => {
     event.preventDefault();
-    const { guessNumber, secretNumber, gameWon } = this.state;
+    const { guessNumber, secretNumber, attemptCount } = this.state;
     const re = /^\d{4}$/;
     if(re.test(guessNumber)){
       var secretArray = [], guessArray = [], bulls = 0, cows = 0;
@@ -35,7 +66,7 @@ class Game extends Component {
       })
       secretArray.forEach(function(key,index){
         if(secretArray.indexOf(guessArray[index]) >= 0){
-          secretArray[guessArray.indexOf(secretArray[index])] = ''
+          secretArray[secretArray.indexOf(guessArray[index])] = ''
           cows = cows + 1;
         }
       })
@@ -49,34 +80,34 @@ class Game extends Component {
         content: guessNumber,
         bullsCount: bulls,
         cowsCount: cows,
+        attemptCount: attemptCount+1,
       };
-      this.setState({
-        guessNumber: '',
-      })
       this.setState(prevState => {
         return{
-          attempts: prevState.attempts.concat(newAttempt)
+          guessNumber: '',
+          attemptCount: prevState.attemptCount + 1,
+          attempts: [newAttempt, ...prevState.attempts]
         };
       })
     }
   }
   render() {
-    const { guessNumber, secretNumber, attempts, gameWon } = this.state;
+    const { guessNumber, attempts, gameWon, attemptCount } = this.state;
     let renderAttempted = attempts.length > 0 ? attempts.map((item) => {
-      return <div key={item.key}>{item.content}
-        <p>Bulls : {item.bullsCount} </p>
-        <p>Cows: {item.cowsCount} </p>
-
-      </div>
+      return <GameAttempts key={item.key}>
+          <p> ATTEMPT {item.attemptCount}</p>
+          <h2>{item.content}</h2>
+          <p>{item.bullsCount} {item.bullsCount.length > 0 ? 'Bulls' : 'Bull'} {item.cowsCount} Cows</p>
+      </GameAttempts>
     }) : ''
 
     return (
       <div>
         { gameWon ?
-          <div> WOOHOO! you won in just {attempts.length} attempts</div> :
+          <WonText> WOOHOO! You won in just {attemptCount} attempts</WonText> :
           <div>
             <form noValidate autoComplete="off" onSubmit={this.__checkAnswer}>
-              <input type="number" value={guessNumber} onChange={this.__handleInputChange} />
+              <GameInput type="number" value={guessNumber} onChange={this.__handleInputChange} />
             </form>
             {renderAttempted}
           </div>
