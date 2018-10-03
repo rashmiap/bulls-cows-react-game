@@ -21,9 +21,15 @@ const GameAttempts = styled.div`
   padding: 2%;
   max-width: 50%;
   margin: 0 auto;
+  background-color: rgba(0,0,0,0.5);
   :first-of-type{
     border-top: none;
   }
+`
+const WonText = styled.h1`
+  background-color: rgba(0,0,0,0.5);
+  display: inline-block;
+  padding: 20px;
 `
 class Game extends Component {
   constructor(){
@@ -98,7 +104,7 @@ class Game extends Component {
     return (
       <div>
         { gameWon ?
-          <h1> WOOHOO! You won in just {attemptCount} attempts</h1> :
+          <WonText> WOOHOO! You won in just {attemptCount} attempts</WonText> :
           <div>
             <form noValidate autoComplete="off" onSubmit={this.__checkAnswer}>
               <GameInput type="number" value={guessNumber} onChange={this.__handleInputChange} />

@@ -3,22 +3,28 @@ import styled from 'styled-components';
 import Rules from './Components/Rules';
 import Game from './Components/Game';
 import './App.css';
+import landScape from './bull-bg.jpg';
 
 const AppWrapper = styled.div`
   padding: 1rem;
   color: white;
   text-align: center;
-  background-image: url(https://www.101computing.net/wp/wp-content/uploads/artillery-game-background.png);
   background-repeat: no-repeat;
   background-size: cover;
+  background-image: url(${landScape});
   height: 100vh;
   overflow: scroll;
+`
+const AppHeader = styled.h1`
+  display: inline-block;
+  background-color: rgba(0,0,0,0.5);
+  padding: 15px;
 `
 class App extends Component {
   render() {
     return (
       <AppWrapper>
-        <h1>Bulls and Cows game</h1>
+        <AppHeader>Bulls and Cows game</AppHeader>
         <Rules />
         <Game />
       </AppWrapper>

@@ -8,6 +8,10 @@ const RulesWrapper = styled.div`
   text-align: left;
   border-radius: 20px;
   border: 10px solid #f0f8fc;
+  background-color: rgba(0,0,0,0.5);
+  @media (max-width: 700px) {
+    max-width: 90%;
+  }
 `
 const RulesLink = styled.a`
   font-size: 14px;
