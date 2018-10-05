@@ -13,12 +13,22 @@ const AppWrapper = styled.div`
   background-size: cover;
   background-image: url(${landScape});
   height: 100vh;
+  box-sizing: border-box;
   overflow: scroll;
 `
 const AppHeader = styled.h1`
   display: inline-block;
   background-color: rgba(0,0,0,0.5);
   padding: 15px;
+`
+const AppLink = styled.a`
+  color: white;
+  background-color: rgba(0,0,0,0.5);
+  padding: 15px;
+  bottom: 0;
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 2%;
 `
 class App extends Component {
   render() {
@@ -27,6 +37,7 @@ class App extends Component {
         <AppHeader>Bulls and Cows game</AppHeader>
         <Rules />
         <Game />
+        <AppLink href="https://github.com/rashmiap/bulls-cows-react-game">https://github.com/rashmiap/bulls-cows-react-game</AppLink>
       </AppWrapper>
     );
   }
