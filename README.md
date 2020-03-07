@@ -19,4 +19,4 @@ The app can be seen in action [here](https://bulls-cows-game.surge.sh).
  1.  Clone this repository and go into its src folder.
  2.  Run  `npm install`
  3.  Run  `npm start`
- 4.  Go to  `http://localhost:3000`  to view the app.
+ 4.  Go to  `http://localhost:3000`  to view the app

@@ -32,8 +32,8 @@ const WonText = styled.h1`
   padding: 20px;
 `;
 class Game extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       guessNumber: "",
       secretNumber: Math.random()
@@ -41,7 +41,8 @@ class Game extends Component {
         .slice(2, 6),
       attempts: [],
       attemptCount: 0,
-      gameWon: false
+      gameWon: false,
+      gameLost: false
     };
   }
   __handleInputChange = event => {
@@ -80,6 +81,11 @@ class Game extends Component {
           gameWon: true
         });
       }
+      if (attemptCount === this.props.numberOfAttemptsSelected) {
+        this.setState({
+          gameLost: true
+        });
+      }
       let newAttempt = {
         key: Date.now(),
         content: guessNumber,
@@ -97,7 +103,7 @@ class Game extends Component {
     }
   };
   render() {
-    const { guessNumber, attempts, gameWon, attemptCount } = this.state;
+    const { guessNumber, attempts, gameWon, gameLost, attemptCount } = this.state;
     let renderAttempted =
       attempts.length > 0
         ? attempts.map(item => {
@@ -120,6 +126,7 @@ class Game extends Component {
         {gameWon ? (
           <WonText> WOOHOO! You won in just {attemptCount} attempts</WonText>
         ) : (
+          gameLost ? <WonText> Oops! You lost</WonText> :
           <div>
             <form noValidate autoComplete="off" onSubmit={this.__checkAnswer}>
               <GameInput

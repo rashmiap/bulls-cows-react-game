@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Rules from './Components/Rules';
 import Game from './Components/Game';
+import Difficulties from './Components/Difficulties'
 import './App.css';
 import landScape from './bull-bg.jpg';
 
@@ -30,13 +31,45 @@ const AppLink = styled.a`
   display: inline-block;
   margin: 2%;
 `
+
+const PlayAgainButton = styled.button`
+background: transparent;
+font-family: inherit;
+font-size: 14px;
+margin: 0 auto;
+font-weight: normal;
+color: white;
+padding: 1em;
+display: block;
+border: none;
+text-decoration: underline;
+cursor: pointer;
+`
 class App extends Component {
+  state = {
+    numberOfAttemptsSelected: 0
+  };
+
+  setNumberOfAttempts(numberOfAttemptsSelected) {
+    this.setState({ numberOfAttemptsSelected });
+  }
+
   render() {
     return (
       <AppWrapper>
         <AppHeader>Bulls and Cows game</AppHeader>
+        <Difficulties 
+          data = {
+            { setNumberOfAttempts: this.setNumberOfAttempts.bind(this) }
+          }
+        />
         <Rules />
-        <Game />
+        <PlayAgainButton onClick = { () => window.location.reload() }> 
+          PLAY AGAIN
+        </PlayAgainButton>
+        <Game 
+          numberOfAttemptsSelected = { this.state.numberOfAttemptsSelected } 
+        />
         <AppLink href="https://github.com/rashmiap/bulls-cows-react-game">https://github.com/rashmiap/bulls-cows-react-game</AppLink>
       </AppWrapper>
     );
